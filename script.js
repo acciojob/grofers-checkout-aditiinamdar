@@ -3,41 +3,35 @@ getSumBtn.textContent = "Get Total Price";
 document.body.appendChild(getSumBtn);
 
 const getSum = () => {
-    // Get all elements with class "price"
-    const priceElements = document.querySelectorAll('.price');
-    
-    // Convert price text to numbers and sum them
+    const prices = document.querySelectorAll('.price');
     let total = 0;
-    priceElements.forEach(element => {
-        total += parseFloat(element.textContent);
+    
+    prices.forEach(p => {
+        total += parseFloat(p.textContent);
     });
 
-    // Create new row for total
     const table = document.querySelector('table');
-    const totalRow = document.createElement('tr');
     
-    const totalCell = document.createElement('td');
-    totalCell.setAttribute('colspan', '1');
-    totalCell.textContent = 'Total';
-    totalCell.style.fontWeight = 'bold';
-
-    const totalPriceCell = document.createElement('td');
-    totalPriceCell.textContent = total;
-    totalPriceCell.style.fontWeight = 'bold';
-    totalPriceCell.style.backgroundColor = '#f0f0f0';
-
-    totalRow.appendChild(totalCell);
-    totalRow.appendChild(totalPriceCell);
-
     // Remove previous total row if exists
-    const existingTotal = document.getElementById('total-row');
-    if (existingTotal) {
-        existingTotal.remove();
-    }
+    const oldRow = document.getElementById('total-row');
+    if (oldRow) oldRow.remove();
 
-    // Add new total row with ID so we can remove it later
-    totalRow.id = 'total-row';
-    table.appendChild(totalRow);
+    // Create new total row
+    const tr = document.createElement('tr');
+    tr.id = 'total-row';
+
+    const tdLabel = document.createElement('td');
+    tdLabel.textContent = 'Total';
+    tdLabel.style.fontWeight = 'bold';
+
+    const tdTotal = document.createElement('td');
+    tdTotal.textContent = total;
+    tdTotal.id = 'ans';                    // This is what the test expects
+    tdTotal.style.fontWeight = 'bold';
+
+    tr.appendChild(tdLabel);
+    tr.appendChild(tdTotal);
+    table.appendChild(tr);
 };
 
 getSumBtn.addEventListener("click", getSum);
